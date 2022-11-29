@@ -14,7 +14,7 @@ function compareLib($database_array, $x){
   echo '<pre>',print_r($_POST,1),'</pre>';
   echo "<hr>";
 
-$sql= "SELECT id, name, email, age FROM staff";
+$sql= "SELECT id, name, email, age FROM newstaff";
 // Make query and get result
 $results = mysqli_query($conn,$sql);
 
@@ -91,7 +91,7 @@ if(isset($_POST['userid_0'])){
 
       echo "Name that is updated: " . $_POST['name']."" ;
       // create sql
-      $sql = "UPDATE staff SET email = '".$_POST['email']."' , name = '".$_POST['name']."' , age = '".$_POST['age']."' WHERE id = '" . $_POST['userid'] . "' ";
+      $sql = "UPDATE newstaff SET email = '".$_POST['email']."' , name = '".$_POST['name']."' , age = '".$_POST['age']."' WHERE id = '" . $_POST['userid'] . "' ";
     
       // save to db and check
 
