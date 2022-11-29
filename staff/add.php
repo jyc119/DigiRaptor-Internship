@@ -53,14 +53,14 @@ if(isset($_POST['submit'])){
   unlink($deletefile);
 
    // create sql
-  $sql = "INSERT INTO staff(email,name,age,imgfile) VALUES('$email', '$name', '$age' , '$filename') ";
+  $sql = "INSERT INTO newstaff(email,name,age,imgfile) VALUES('$email', '$name', '$age' , '$filename') ";
 
    // save to db and check
 
   if(mysqli_query($conn, $sql)){
     // success
     move_uploaded_file($tempname, $folder);
-    header('Location: index.php');
+    header('Location: staffPage.php');
   } else{
     // error
     echo 'querry error: ' . mysqli_error($conn);
