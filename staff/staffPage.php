@@ -3,7 +3,7 @@
   include('../config/db_connect.php');
 
  // Write query for all data
-  $sql = 'SELECT * FROM staff ORDER BY age';
+  $sql = 'SELECT * FROM newstaff ORDER BY age';
 
  // Make query and get result
   $results = mysqli_query($conn,$sql);
@@ -73,19 +73,19 @@ tr:nth-child(even) {
     </table>
 
   <div class="card-action right-align">
-    <a href="/staff/add.php" class="brand-text">Add a staff</a>
+    <a href="/demo/staff/add.php" class="brand-text">Add a staff</a>
   </div>
 
   <div class="card-action right-align">
-    <a href="/staff/updateAll.php" class="brand-text">Update Staff</a>
+    <a href="/demo/staff/updateAll.php" class="brand-text">Update Staff</a>
   </div>
 
   <div class="card-action right-align">
-    <a href="/staff/excelForm.php" class="brand-text">Update Staff Form</a>
+    <a href="/demo/staff/excelForm.php" class="brand-text">Update Staff Form</a>
   </div>
 
   <div class="card-action right-align">
-    <a href="/staff/filter.php" class="brand-text">Filter</a>
+    <a href="/demo/staff/filter.php" class="brand-text">Filter</a>
   </div>
 
 </html> 
