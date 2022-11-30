@@ -21,7 +21,7 @@ if(isset($_GET['id'])){
 //------------ Query to initialise the current record that needs to be updated--------------
 
 echo 'The id for this staff is: ' . $id;
-$sql_name = "SELECT * FROM project where id = $id; ";
+$sql_name = "SELECT * FROM newproject where id = $id; ";
 
  // Make query and get result
 $results_originalname = mysqli_query($conn,$sql_name);
@@ -41,7 +41,7 @@ echo '<pre>',print_r($curproject,1),'</pre>';
 
 //------------ Query to obtain the teamleader id from project_staff--------------
 echo "Hello testing";
-$staffproj = "SELECT * FROM project_staff where project_id = $id; ";
+$staffproj = "SELECT * FROM newproject_staff where project_id = $id; ";
 $res_staffproj = mysqli_query($conn,$staffproj);
 $staffproject_lib = mysqli_fetch_all($res_staffproj, MYSQLI_ASSOC);
 $tleaderid_arr = array();
@@ -60,7 +60,7 @@ echo '<pre>',print_r($staffproject_lib,1),'</pre>';
 
 //------------ Query to obtain all the staff from staff table--------------
 
-$sql= "SELECT * FROM staff";
+$sql= "SELECT * FROM newstaff";
 $results = mysqli_query($conn,$sql);
 $allstaff = mysqli_fetch_all($results, MYSQLI_ASSOC);
 $size = count($allstaff);
@@ -133,18 +133,18 @@ if(isset($_POST['userid'])){
   if (!array_filter($errors)){
 
     // create sql
-    echo $sql = "UPDATE project SET name = '".$_POST['name']."', description = '".$_POST['description']."' , startdate = '".$_POST['startdate']."' , enddate = '".$_POST['enddate']."' WHERE id = '" . $_POST['userid'] . "' ";
+    echo $sql = "UPDATE newproject SET name = '".$_POST['name']."', description = '".$_POST['description']."' , startdate = '".$_POST['startdate']."' , enddate = '".$_POST['enddate']."' WHERE id = '" . $_POST['userid'] . "' ";
   
     // save to db and check
 
     if(mysqli_query($conn, $sql)){
     // success
-      $delete_sql = "DELETE FROM project_staff WHERE project_id = $id";
+      $delete_sql = "DELETE FROM newproject_staff WHERE project_id = $id";
       mysqli_query($conn, $delete_sql);
 
       foreach ($_POST['teamleaderid'] as $subject){
 
-      $next_sql = "INSERT INTO project_staff(teamleader_id, project_id) VALUES('$subject', '$id')";
+      $next_sql = "INSERT INTO newproject_staff(teamleader_id, project_id) VALUES('$subject', '$id')";
       
       mysqli_query($conn, $next_sql);
     }
