@@ -3,7 +3,7 @@
   include('../config/db_connect.php');
 
   // Write query for all data
-  $sql = 'SELECT * FROM project_staff ORDER BY id';
+  $sql = 'SELECT * FROM newproject_staff ORDER BY id';
 
  // Make query and get result
   $results = mysqli_query($conn,$sql);
@@ -15,12 +15,6 @@
  //echo '<pre>', print_r($studentrecs,1),'</pre>';
  //echo print_r($results,1);
  //echo print_r($studentrecs,1);
-
- // free result from memory
-  mysqli_free_result($results);
-
- // close connection
-  mysqli_close($conn);
 
 ?>  
 
@@ -61,7 +55,23 @@ tr:nth-child(even) {
     </tr>
 
     <?php foreach($projects as $result){ 
-      echo "<tr><td>" . $result['id'] . "</td><td> " . $result['teamleader_id'] . "</td><td>" . $result['staff_id'] . "</td><td> " . $result['project_id'] . "</td>";
+
+      //-------------------Query to obtain all the project names----------------------
+
+      $sqlProj = "SELECT * FROM newproject WHERE id = '".$result['project_id']."'";
+      $projresults = mysqli_query($conn, $sqlProj);
+      $proj = mysqli_fetch_all($projresults, MYSQLI_ASSOC);
+      //------------------------------------------------------------------------------
+
+      //-------------------Query to obtain all the staff names----------------------
+
+      $sqlStaff = "SELECT * FROM newstaff WHERE id = '".$result['teamleader_id']."'";
+      $staffresults = mysqli_query($conn, $sqlStaff);
+      $staffconcern = mysqli_fetch_all($staffresults, MYSQLI_ASSOC);
+
+      //------------------------------------------------------------------------------  
+
+      echo "<tr><td>" . $result['id'] . "</td><td> " . $result['teamleader_id'] . "(" .$staffconcern[0]['name'].")". "</td><td>" . $result['staff_id'] . "</td><td> " . $result['project_id'] . "(" .$proj[0]['name'].")" . "</td>";
       echo "<td><a href='update.php?id=". $result['id'] . "'>Edit</a></td>";
       echo "<td>" . $result['edited_on'] . "</td><td>";
       ?> 
