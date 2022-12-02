@@ -48,7 +48,6 @@ tr:nth-child(even) {
     <tr>
       <th>ID</th>
       <th>Team Leader ID</th>
-      <th>Staff ID</th>
       <th>Project ID</th>
       <th>Option</th>
       <th>Edited on</th>
@@ -71,7 +70,7 @@ tr:nth-child(even) {
 
       //------------------------------------------------------------------------------  
 
-      echo "<tr><td>" . $result['id'] . "</td><td> " . $result['teamleader_id'] . "(" .$staffconcern[0]['name'].")". "</td><td>" . $result['staff_id'] . "</td><td> " . $result['project_id'] . "(" .$proj[0]['name'].")" . "</td>";
+      echo "<tr><td>" . $result['id'] . "</td><td> " . $result['teamleader_id'] . "(" .$staffconcern[0]['name'].")". "</td><td>" . $result['project_id'] . "(" .$proj[0]['name'].")" . "</td>";
       echo "<td><a href='update.php?id=". $result['id'] . "'>Edit</a></td>";
       echo "<td>" . $result['edited_on'] . "</td><td>";
       ?> 
