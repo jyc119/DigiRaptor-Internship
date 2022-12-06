@@ -3,7 +3,7 @@
   include('../config/db_connect.php');
 
  // Write query for all data
-  $sql = 'SELECT * FROM newstaff ORDER BY age';
+  $sql = 'SELECT * FROM newstaff ORDER BY id';
 
  // Make query and get result
   $results = mysqli_query($conn,$sql);
@@ -16,11 +16,6 @@
  //echo print_r($results,1);
  //echo print_r($studentrecs,1);
 
- // free result from memory
-  mysqli_free_result($results);
-
- // close connection
-  mysqli_close($conn);
 
 ?>
 
@@ -56,14 +51,36 @@ tr:nth-child(even) {
       <th>Name</th>
       <th>Email</th>
       <th>Age</th>
+      <th>Projects</th>
       <th>Option</th>
       <th>Edited on</th>
       <th>Profile Pic</th>
     </tr>
 
     <?php foreach($staff as $result){ 
-      echo "<tr><td>" . $result['id'] . "</td><td> " . $result['name'] . "</td><td> " . $result['email'] . "</td><td> " . $result['age'] .  "</td>";
-      echo "<td><a href='update.php?id=". $result['id'] . "'>Edit</a></td>";
+
+      //-----------Query to find the project associated with this staff info------------------
+      $sql = "SELECT * FROM newproject_staff WHERE staff_id = '".$result['id']."' ";
+      $results = mysqli_query($conn,$sql);
+      $projects = mysqli_fetch_all($results, MYSQLI_ASSOC);
+      //echo '<pre>', print_r($staffmember,1),'</pre>';
+      $projectarray = array();
+      foreach($projects as $project){
+        $sqlstaff = "SELECT * FROM newproject WHERE id = '".$project['project_id']."'";
+        $projectresults = mysqli_query($conn,$sqlstaff);
+        $projectOnlymember = mysqli_fetch_all($projectresults, MYSQLI_ASSOC);
+        //echo '<pre>', print_r($staffOnlymember,1),'</pre>';
+        array_push($projectarray, $projectOnlymember[0]['name']);
+      }  
+
+      echo "<tr><td>" . $result['id'] . 
+            "</td><td> " . $result['name'] . 
+            "</td><td> " . $result['email'] . 
+            "</td><td> " . $result['age'] .  "</td><td>";
+            foreach($projectarray as $indivstaff){
+              echo $indivstaff . "<br><br>";
+            }      
+      echo "</td><td><a href='update.php?id=". $result['id'] . "'>Edit</a></td>";
       echo "<td>" . $result['edited_on'] . "</td>";
       ?> 
       <td><img src="../images/<?php echo $result['imgfile']; ?>" alt = "" style="max-height:100px;max-width:100px;"></td></tr>
