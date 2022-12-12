@@ -105,4 +105,8 @@ tr:nth-child(even) {
     <a href="/demo/staff/filter.php" class="brand-text">Filter</a>
   </div>
 
+  <div class="card-action right-align">
+    <a href="/demo/staff/report.php" class="brand-text">Report</a>
+  </div>
+
 </html> 
