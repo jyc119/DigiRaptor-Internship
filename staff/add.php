@@ -75,8 +75,80 @@ if(isset($_POST['submit'])){
 <!DOCTYPE html>
 <html>
 
+<body>
+<style>  
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+
+  .navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+</body>
+
+<br>
+<br>
+
+<div class="content">
 <section class="container grey-text">
-  <h4 class="center">Add an employee</h4>
+  <br>
+  <br>
+  <h2 class="center">Add an employee</h2>
   <form class="white" action="add.php" method="POST" enctype="multipart/form-data">
 
   <input type="hidden" name = "id" value = "<?php echo $id ?>"> 
@@ -119,5 +191,12 @@ if(isset($_POST['submit'])){
   </div>
   </form>
 </section>
+
+</div>  
+
+<div class="navbar">
+    <a href="/demo/staff/staffPage.php" class="brand-text">Staff Table</a>
+    <a href="/demo/index.php" class="brand-text">Main Page</a>
+  </div>  
 
 </html> 

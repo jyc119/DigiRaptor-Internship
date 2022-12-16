@@ -20,7 +20,7 @@ function sqlFilterQuery(){
 
 }
 
-$sql= "SELECT id, name, email, age FROM staff";
+$sql= "SELECT id, name, email, age FROM newstaff";
 // Make query and get result
 $results = mysqli_query($conn,$sql);
 
@@ -72,43 +72,24 @@ if(isset($_POST['userid'])){
     echo $str;
 
     if($str == "name"){
-      $sql_filter = "SELECT id, name, email, age FROM staff WHERE name LIKE '%".$_POST['name']."%' ";
+      $sql_filter = "SELECT id, name, email, age FROM newstaff WHERE name LIKE '%".$_POST['name']."%' ";
     }elseif($str == "age"){
-      $sql_filter = "SELECT id, name, email, age FROM staff WHERE age = '".$_POST['age']."' ";
+      $sql_filter = "SELECT id, name, email, age FROM newstaff WHERE age = '".$_POST['age']."' ";
     }elseif($str == "email"){
-      $sql_filter = "SELECT id, name, email, age FROM staff WHERE email LIKE '%".$_POST['email']."%' ";
+      $sql_filter = "SELECT id, name, email, age FROM newstaff WHERE email LIKE '%".$_POST['email']."%' ";
     }
 
     $filter_result = mysqli_query($conn,$sql_filter);
 
     // fetch the resulting rows as an array
     $filter_staff = mysqli_fetch_all($filter_result, MYSQLI_ASSOC);
-
-    print_r($errors);
     echo "<br><br>FILTER DONE<br><br>";
     } else{
     // error
     echo 'querry error: ' . mysqli_error($conn);
     }
-
-    /*
-    // create sql
-    $sql = "UPDATE staff SET email = '".$_POST['email']."' , name = '".$_POST['name']."' , age = '".$_POST['age']."' WHERE id = '" . $_POST['userid'] . "' ";
-  
-    // save to db and check
-
-    if(mysqli_query($conn, $sql)){
-    // success
-      header('Location: filter.php');
-      echo "<br><br>UPDATE DONE<br><br>";
-    } else{
-    // error
-    echo 'querry error: ' . mysqli_error($conn);
-    }
-  }
-  */
+    
   }else{
-    print_r($errors);
   }
 
 ?>
@@ -116,9 +97,47 @@ if(isset($_POST['userid'])){
 <!DOCTYPE html>
 <html>
 
+<body>
+<style>  
+  .navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+</style>
+</body>
+
+<br>
+<br>
+
 <!-- Styling the table -->
 <head>
 <style>
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -138,7 +157,7 @@ tr:nth-child(even) {
 </head>
 
 <!-- Form -->
-
+<div class="content">
 <section class="container grey-text">
 <h4 class="center">Filter Staff Details</h4>
 <form class="white" action="filter.php" method="POST">
@@ -196,5 +215,12 @@ tr:nth-child(even) {
   <a href="index.php" class="brand-text">Back to Mainpage</a>
 </div>
 </section> 
+</div>
+
+
+<div class="navbar">
+  <a href="/demo/staff/staffPage.php" class="brand-text">Staff Table</a>
+  <a href="/demo/index.php" class="brand-text">Main Page</a>
+</div>  
 
 </html> 

@@ -11,11 +11,8 @@ function compareLib($database_array, $x){
   return $compareAge && $compareEmail && $compareName;
 }
 
-echo '<pre>',print_r($_POST,1),'</pre>';
-echo "<hr>";
-
 // Make query and get result
-$sql= "SELECT id, name, email, age FROM staff";
+$sql= "SELECT id, name, email, age FROM newstaff";
 $results = mysqli_query($conn,$sql);
 
  // fetch the resulting rows as an array
@@ -112,8 +109,47 @@ if(isset($_POST['userid_0'])){
 
 <!DOCTYPE html>
 <html>
+
+<body>
+<style>  
+  .navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+</style>
+</body>
+
+<br>
+<br>
+
 <head>
 <style>
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -132,6 +168,7 @@ tr:nth-child(even) {
 </style>
 </head>
 
+<div class="content">
 <h1 class="center grey-text">Update Staff Information</h1>
 <form class="white" action="excelForm.php" method="POST">
 
@@ -172,7 +209,12 @@ tr:nth-child(even) {
   <div class="center">
     <input type="submit" name = "submit" value = "update" class="btn brand z-depth-0">
   </div>
-
+</div>
 </form>  
+
+<div class="navbar">
+  <a href="/demo/staff/staffPage.php" class="brand-text">Staff Table</a>
+  <a href="/demo/index.php" class="brand-text">Main Page</a>
+</div>  
 
 </html> 

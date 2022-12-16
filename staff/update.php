@@ -18,7 +18,7 @@ if(isset($_GET['id'])){
   $id = $_GET['id'];
 }
 echo 'The id for this staff is: ' . $id;
-$sql_name = "SELECT * FROM staff where id = $id; ";
+$sql_name = "SELECT * FROM newstaff where id = $id; ";
 
  // Make query and get result
 $results_originalname = mysqli_query($conn,$sql_name);
@@ -78,7 +78,7 @@ if(isset($_POST['userid'])){
   if (!array_filter($errors)){
 
     // create sql
-    echo $sql = "UPDATE staff SET email = '".$_POST['email']."' , name = '".$_POST['name']."' , age = '".$_POST['age']."' , imgfile = '".$_FILES['uploadfile']['name']."' WHERE id = '" . $_POST['userid'] . "' ";
+    echo $sql = "UPDATE newstaff SET email = '".$_POST['email']."' , name = '".$_POST['name']."' , age = '".$_POST['age']."' , imgfile = '".$_FILES['uploadfile']['name']."' WHERE id = '" . $_POST['userid'] . "' ";
   
     // save to db and check
 
@@ -100,6 +100,15 @@ if(isset($_POST['userid'])){
 
 <!DOCTYPE html>
 <html>
+
+<style>
+  .content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+</style>
 
 <section class="container grey-text">
   <h4 class="center">Update staff details</h4>

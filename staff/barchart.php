@@ -62,6 +62,14 @@ if(isset($_POST['submit'])){
 
 <body>
 <style>  
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+
   .navbar {
   overflow: hidden;
   background-color: #333;
@@ -147,6 +155,7 @@ if (isset($dates)){
 
 ?>
 
+<div class="content">
 <section class="container grey-text">
   <h4 class="center">Report Page</h4>
   <form class="white" action="barchart.php" method="POST" enctype="multipart/form-data">
@@ -175,6 +184,7 @@ if (isset($dates)){
 
   </form>
 </section>  
+</div>
 
 <head>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

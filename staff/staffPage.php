@@ -11,41 +11,136 @@
  // fetch the resulting rows as an array
   $staff = mysqli_fetch_all($results, MYSQLI_ASSOC);
 
- //echo '<pre>', print_r($results,1),'</pre>';
- //echo '<pre>', print_r($studentrecs,1),'</pre>';
- //echo print_r($results,1);
- //echo print_r($studentrecs,1);
+  $datetoday = date("Y-m-d");
+
+  if(isset($_POST['checkin'])){
+
+    $id = $_POST['inid'];
+
+    // check if record already exists
+    $query = "SELECT * FROM attendance WHERE curdate = '$datetoday' AND staffid = $id ";
+
+    $sql_query = mysqli_query($conn,$query);
+
+    // fetch the resulting rows as an array
+    $project_lib = mysqli_fetch_all($sql_query, MYSQLI_ASSOC);
+
+    echo '<pre>', print_r($project_lib, 1),'</pre>';
+    echo sizeof($project_lib);
+    
+    if(sizeof($project_lib) == 0){
+      // Write query for all data
+      $sql = "INSERT INTO attendance(curdate, staffid) VALUES ('$datetoday', '$id')";
+
+      // save to db and check
+      if(mysqli_query($conn, $sql)){
+        // success
+        header('Location: staffPage.php');
+      } else{
+        // error
+        echo 'querry error: ' . mysqli_error($conn);
+      }
+    } else{
+      echo "Alrdy checkin bro";
+    }
+    
+  }
+
+  else if(isset($_POST['checkout'])){
+
+    $id = $_POST['outid'];
+    // Write query for all data
+    $sql = "UPDATE attendance SET check_out=now() WHERE staffid = '".$_POST['outid']."' AND curdate = '$datetoday'";
+
+    // save to db and check
+    if(mysqli_query($conn, $sql)){
+      // success
+      header('Location: staffPage.php');
+    } else{
+      // error
+      echo 'querry error: ' . mysqli_error($conn);
+    }
+  }
 
 
 ?>
 
 <!DOCTYPE html>
 <html>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
 <style>
-table {
-  font-family: arial, sans-serif;
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+  
+#staff {
+  font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
+#staff td, #staff th {
+  border: 1px solid #ddd;
   padding: 8px;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+#staff tr:nth-child(even){background-color: #f2f2f2;}
+
+#staff tr:hover {background-color: #ddd;}
+
+#staff th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
 }
 
 </style>
 </head>
 
-<h1 class="center grey-text">Staff Information</h1>
+<body>
+<style>  
+  .navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
-  <table>
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+
+</style>
+</body>
+
+<br>
+<br>
+<div class="header">
+  <h1>Staff Information</h1>
+</div>
+
+<div class="content">
+  <table id="staff">
     <tr>
       <th>ID</th>
       <th>Name</th>
@@ -55,6 +150,8 @@ tr:nth-child(even) {
       <th>Option</th>
       <th>Edited on</th>
       <th>Profile Pic</th>
+      <th>Check-in</th>
+      <th>Check-out</th>
     </tr>
 
     <?php foreach($staff as $result){ 
@@ -63,13 +160,11 @@ tr:nth-child(even) {
       $sql = "SELECT * FROM newproject_staff WHERE staff_id = '".$result['id']."' ";
       $results = mysqli_query($conn,$sql);
       $projects = mysqli_fetch_all($results, MYSQLI_ASSOC);
-      //echo '<pre>', print_r($staffmember,1),'</pre>';
       $projectarray = array();
       foreach($projects as $project){
         $sqlstaff = "SELECT * FROM newproject WHERE id = '".$project['project_id']."'";
         $projectresults = mysqli_query($conn,$sqlstaff);
         $projectOnlymember = mysqli_fetch_all($projectresults, MYSQLI_ASSOC);
-        //echo '<pre>', print_r($staffOnlymember,1),'</pre>';
         array_push($projectarray, $projectOnlymember[0]['name']);
       }  
 
@@ -83,30 +178,32 @@ tr:nth-child(even) {
       echo "</td><td><a href='update.php?id=". $result['id'] . "'>Edit</a></td>";
       echo "<td>" . $result['edited_on'] . "</td>";
       ?> 
-      <td><img src="../images/<?php echo $result['imgfile']; ?>" alt = "" style="max-height:100px;max-width:100px;"></td></tr>
+      <td><img src="../images/<?php echo $result['imgfile']; ?>" alt = "" style="max-height:100px;max-width:100px;"></td>
+      <td>
+        <form method="POST" action="staffPage.php" >
+          <input type="hidden" name = "inid" value =  "<?php echo $result['id'] ?>">
+          <button class="btn btn-primary" type="submit" name="checkin">Check-In</button>
+        </form>
+      </td>
+      <td>
+        <form method="POST" action="staffPage.php">
+          <input type="hidden" name = "outid" value =  "<?php echo $result['id'] ?>"> 
+          <button class="btn btn-primary" type="submit" name="checkout">Check-Out</button>
+        </form> 
+      </td></tr>
   <?php
     } 
     ?>
     </table>
+</div>    
 
-  <div class="card-action right-align">
+  <div class="navbar">
+    <a href="/demo/index.php" class="brand-text">Main Webpage</a>
     <a href="/demo/staff/add.php" class="brand-text">Add a staff</a>
-  </div>
-
-  <div class="card-action right-align">
-    <a href="/demo/staff/updateAll.php" class="brand-text">Update Staff</a>
-  </div>
-
-  <div class="card-action right-align">
-    <a href="/demo/staff/excelForm.php" class="brand-text">Update Staff Form</a>
-  </div>
-
-  <div class="card-action right-align">
-    <a href="/demo/staff/filter.php" class="brand-text">Filter</a>
-  </div>
-
-  <div class="card-action right-align">
+    <a href="/demo/staff/excelForm.php" class="brand-text">Update Staff</a>
+    <a href="/demo/staff/filter.php" class="brand-text">Filter Staff members</a>
     <a href="/demo/staff/report.php" class="brand-text">Report</a>
-  </div>
+    <a href="/demo/staff/barchart.php" class="brand-text">Bar Chart Attendance</a>
+  </div>  
 
 </html> 

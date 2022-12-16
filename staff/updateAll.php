@@ -120,6 +120,16 @@ if(isset($_POST['userid_0'])){
 <!DOCTYPE html>
 <html>
 
+<style>
+  .content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+</style>
+
+<div class="content">
 <section class="container grey-text">
 <h4 class="center">Update staff details</h4>
 <form class="white" action="updateAll.php" method="POST">
@@ -161,5 +171,6 @@ if(isset($_POST['userid_0'])){
     <input type="submit" name = "submit" value = "update" class="btn brand z-depth-0">
   </div>
 </form>
+</div>
   
 </html> 

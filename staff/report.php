@@ -29,27 +29,6 @@ if(isset($_POST['submit'])){
 
   $begindate = $_POST['startdate'];
   $enddate = $_POST['enddate'];
-
-  /*
-  // Sql query to obtain all the staff members between beginning and start date
-  $sql = "SELECT * FROM attendance WHERE curdate BETWEEN '$begindate' AND '$enddate'";
-  // Make query and get result
-  $results = mysqli_query($conn,$sql);
- // fetch the resulting rows as an array
-  $staffbetween = mysqli_fetch_all($results, MYSQLI_ASSOC);
-  echo '<pre>', print_r($staffbetween,1),'</pre>';
-  $namearray = array();
-  //SQL query to obtain the name of the staff involved
-  foreach($staffbetween as $staff){
-    $sqlname = "SELECT * FROM newstaff WHERE id = '".$staff['staffid']."'";
-    $nameres = mysqli_query($conn,$sqlname);
-    $nameofstaff = mysqli_fetch_all($nameres, MYSQLI_ASSOC);
-    echo '<pre>', print_r($nameofstaff,1),'</pre>';
-    array_push($namearray, $nameofstaff[0]['name']);
-  }
-  echo "BOOM array";
-  echo '<pre>', print_r($namearray,1),'</pre>';
-  */
   
   function createDateRangeArray($strDateFrom,$strDateTo)
   {
@@ -83,8 +62,46 @@ if(isset($_POST['submit'])){
 <!DOCTYPE html>
 <html>
 
+<body>
+<style>  
+  .navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+</style>
+</body>
+
+<br>
+<br>
+
 <head>
 <style>
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -103,7 +120,7 @@ tr:nth-child(even) {
 
 </style>
 </head>
-
+<div class="content">
 <section class="container grey-text">
   <h4 class="center">Report Page</h4>
   <form class="white" action="report.php" method="POST" enctype="multipart/form-data">
@@ -171,6 +188,8 @@ tr:nth-child(even) {
           $actualtime = floor($hoursbefore) . ':' . ( ($hoursbefore-floor($hoursbefore)) * 60 );
           $hrs = substr($actualtime, 0, 1);
           $mins = floor(substr($actualtime, 2, strlen($actualtime)));
+          $totalmins = 60*$hrs + $mins;
+          echo $totalmins;
           if($hrs == 0){
             echo "<td>" .$mins. " mins </td>";
           }else{
@@ -189,5 +208,11 @@ tr:nth-child(even) {
 
 ?>
 </table>
+</div>
+
+<div class="navbar">
+  <a href="/demo/staff/staffPage.php" class="brand-text">Staff Table</a>
+  <a href="/demo/index.php" class="brand-text">Main Page</a>
+</div> 
 
 </html> 
