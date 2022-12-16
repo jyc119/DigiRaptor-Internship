@@ -21,30 +21,75 @@
 <!DOCTYPE html>
 <html>
 
+<body>
+<style>  
+  .navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+</style>
+</body>
+
+<br>
+<br>
+
 <head>
 <style>
-table {
-  font-family: arial, sans-serif;
+
+.content {
+  max-width: 1000px;
+  margin: auto;
+  background: white;
+  padding: 10px;
+}
+
+#staff {
+  font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
 }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
+#staff td, #staff th {
+  border: 1px solid #ddd;
   padding: 8px;
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+#staff tr:nth-child(even){background-color: #f2f2f2;}
+
+#staff tr:hover {background-color: #ddd;}
+
+#staff th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
 }
 
 </style>
 </head>
-
+<div class="content">
 <h1 class="center grey-text">Project Information</h1>
 
-<table>
+<table id="staff">
     <tr>
       <th>ID</th>
       <th>Project Name</th>
@@ -90,10 +135,10 @@ tr:nth-child(even) {
     } 
     ?>
     </table>
-
-  
-  <div class="card-action right-align">
-    <a href="add.php" class="brand-text">Add a project</a>
-  </div>
+</div>
+  <div class="navbar">
+    <a href="/demo/index.php" class="brand-text">Main Webpage</a>
+    <a href="/demo/project/add.php" class="brand-text">Add a Project</a>
+  </div>  
 
 </html> 

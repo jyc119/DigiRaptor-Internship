@@ -18,6 +18,7 @@ if(isset($_GET['id'])){
   $id = $_GET['id'];
 }
 
+
 //------------ Query to initialise the current record that needs to be updated--------------
 
 echo 'The id for this staff is: ' . $id;
@@ -143,7 +144,7 @@ if(isset($_POST['userid'])){
       mysqli_query($conn, $delete_sql);
 
       foreach ($_POST['teamleaderid'] as $subject){
-
+      
       $next_sql = "INSERT INTO newproject_staff(teamleader_id, project_id) VALUES('$subject', '$id')";
       
       mysqli_query($conn, $next_sql);
@@ -163,6 +164,21 @@ if(isset($_POST['userid'])){
 
 <!DOCTYPE html>
 <html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+
+<script>
+$(document).ready(function(){
+  $('option').mousedown(function(e) {
+    e.preventDefault();
+    $(this).prop('selected', !$(this).prop('selected'));
+    return false;
+  });
+});
+</script>
+
 
 <section class="container grey-text">
   <h4 class="center">Update Project details</h4>

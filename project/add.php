@@ -1,14 +1,10 @@
 <?php
 include('../config/db_connect.php');
 
-function compareID($database_array, $x){
-
-}
-
 $errors = array('leaderid' => '' , 'name' => '', 'description' => '' , 'startdate' => '', 'enddate' => '');
 
 // Query to get all staff ids
-$sql= "SELECT * FROM staff";
+$sql= "SELECT * FROM newstaff";
 $results = mysqli_query($conn,$sql);
 $staff_lib = mysqli_fetch_all($results, MYSQLI_ASSOC);
 $size = count($staff_lib);
@@ -97,7 +93,7 @@ if(isset($_POST['submit'])){
   
   
   // create sql
-  $sql = "INSERT INTO project(name,description,startdate,enddate) VALUES('$name', '$description', '$startdate','$enddate') ";
+  $sql = "INSERT INTO newproject(name,description,startdate,enddate) VALUES('$name', '$description', '$startdate','$enddate') ";
   
    // save to db and check
   
@@ -106,7 +102,7 @@ if(isset($_POST['submit'])){
     $last_id = mysqli_insert_id($conn);
 
     foreach ($_POST['teamleaderid'] as $subject){
-      $next_sql = "INSERT INTO project_staff(teamleader_id, project_id) VALUES('$subject', '$last_id')";
+      $next_sql = "INSERT INTO newproject_staff(teamleader_id, project_id) VALUES('$subject', '$last_id')";
       mysqli_query($conn, $next_sql);
     }
 
@@ -126,6 +122,36 @@ if(isset($_POST['submit'])){
 
 <!DOCTYPE html>
 <html>
+
+<body>
+<style>  
+  .navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+</style>
+</body>
+
+<br>
+<br>
 
 <section class="container grey-text">
   <h4 class="center">Add a project</h4>
@@ -189,5 +215,10 @@ if(isset($_POST['submit'])){
   </div>
   </form>
 </section>
+
+  <div class="navbar">
+    <a href="/demo/index.php" class="brand-text">Main Webpage</a>
+    <a href="/demo/project/project.php" class="brand-text">Project Table</a>
+  </div>  
 
 </html> 
